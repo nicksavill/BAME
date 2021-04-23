@@ -6,4 +6,4 @@ Analysis of BAME data.
 
 2. Run the R scripts `course_marks.R` and `awards.R` to perform the statistical analyses. These scripts read in the cleaned csv files from Step 1. 
 
-3. Run `plots.py` to output various graphs. Can also use the jupyter notebook plots.ipynb. These could be re-written in R.
+3. Run `plots.py` to output various graphs. Can also use the jupyter notebook `plots.ipynb`. These could be re-written in R.

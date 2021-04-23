@@ -1,7 +1,4 @@
-# Analysis of 4th year course marks excluding the Honours Project
-# EU treated separately from Overseas, RestUK and Scottish
-# Using a linear mixed effect model with student ID as the random 
-# effect
+# Analysis of course marks and Honours Project marks
 
 library(Matrix)
 library(tidyr)
@@ -47,7 +44,7 @@ b <- within(b, Ethnicity <- relevel(Ethnicity, ref = "White"))
 #   2) ethnicity as a factor
 model.1a <- lme(lMark ~ 1, random=~1|ID, b, method="ML")
 model.1b <- lme(lMark ~ Ethnicity, random=~1|ID, b, method="ML")
-# model 2 does not improve on model 1
+# model 1b does not improve on model 1a
 # therefore no effect of ethnicity in EU students
 anova(model.1a, model.1b)
 Anova(model.1b, type = 2)
@@ -83,14 +80,13 @@ b <- within(b, Fee_status <- relevel(Fee_status, ref = "RestUK+RoI"))
 contrasts(b$Fee_status) <- contr.helmert(3)
 
 # Full model with interactions 
-# Fitted to transformed data to get more normal residuals (although not important)
 model.2a <- lme(lMark ~ Fee_status*Ethnicity, random=~1|ID, b, method="REML")
 
 # Significant interaction between fee status and ethnicity exists
 Anova(model.2a, type = 2)
 summary(model.2a)
 
-# Model to get average change in BAME vs hite
+# Fit model to Mark data rather than transformed to get coefficients for report
 model.2b <- lme(Mark ~ Fee_status*Ethnicity, random=~1|ID, b, method="REML")
 summary(model.2b)
 
@@ -119,10 +115,9 @@ levels(b$Fee_status)
 b <- within(b, Ethnicity <- relevel(Ethnicity, ref = "White"))
 
 # Full model with interactions 
-# Fitted to transformed data to get more normal residuals (although not important)
 model.3a <- lm(lMark ~ 1, b)
 model.3b <- lm(lMark ~ Ethnicity, b)
-# model 8 does not improve on model 7
+# model 3b does not improve on model 3a
 # therefore no effect of ethnicity in EU students
 Anova(model.3b)
 anova(model.3a, model.3b)
@@ -155,7 +150,6 @@ b <- within(b, Fee_status <- relevel(Fee_status, ref = "RestUK+RoI"))
 contrasts(b$Fee_status) <- contr.helmert(3)
 
 # Full model with interactions 
-# Fitted to transformed data to get more normal residuals (although not important)
 model.4a <- lm(lMark ~ Fee_status+Ethnicity, b)
 model.4b <- lm(lMark ~ Fee_status*Ethnicity, b)
 Anova(model.4b, type = 2)
@@ -189,7 +183,6 @@ levels(b$Fee_status)
 b <- within(b, Ethnicity <- relevel(Ethnicity, ref = "White"))
 
 # Full model with interactions 
-# Fitted to transformed data to get more normal residuals (although not important)
 model.5a <- lme(lMark ~ 1, random=~1|ID, b, method="ML")
 model.5b <- lme(lMark ~ Ethnicity, random=~1|ID, b, method="ML")
 anova(model.5a, model.5b)
@@ -224,8 +217,7 @@ b <- within(b, Fee_status <- relevel(Fee_status, ref = "RestUK+RoI"))
 # Use treatment contrasts for fee status so we can compare fee status
 contrasts(b$Fee_status) <- contr.treatment(3)
 
-# Full model with interactions 
-# Fitted to transformed data to get more normal residuals (although not important)
+# Full model without interactions 
 model.6a <- lme(lMark ~ Fee_status, random=~1|ID, b, method="ML")
 model.6b <- lme(lMark ~ Fee_status+Ethnicity, random=~1|ID, b, method="ML")
 anova(model.6a, model.6b)

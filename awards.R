@@ -1,5 +1,4 @@
 # Analysis of Percent high classifications
-# EU treated separately from Overseas, RestUK and Scottish
 
 library(tidyr)
 library(tidyverse)
@@ -25,9 +24,9 @@ contrasts(b$Fee_status) <- contr.helmert(4)
 # Compare two models
 #   1) no interactions between fee status and ethnicity
 #   2) interactions between fee status and ethnicity
-model2 <- glm('high ~ Fee_status+Ethnicity', data=b, family=binomial)
-model3 <- glm('high ~ Fee_status*Ethnicity', data=b, family=binomial)
-# model 2 does not improve on model 1
-Anova(model3, type = 2)
-summary(model2)
+model.1a <- glm('high ~ Fee_status+Ethnicity', data=b, family=binomial)
+model.1b <- glm('high ~ Fee_status*Ethnicity', data=b, family=binomial)
+# model 1b does not improve on model 1a
+Anova(model.1b, type = 2)
+summary(model.1a)
 

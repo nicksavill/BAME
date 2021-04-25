@@ -10,5 +10,5 @@ Analysis of BAME data.
 
 # TODO
 
-1. Please feel free to re-write the Python code for cleaning and plotting in R.
+1. Re-write the Python code for cleaning and plotting in R.
 2. Handle course marks of 0. These are currently removed to ensure the residuals are normal.
